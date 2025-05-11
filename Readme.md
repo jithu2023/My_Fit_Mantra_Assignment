@@ -53,7 +53,7 @@ The workout plan is generated based on the user’s profile and preferences. Use
 
 The **Workout Plan Generator API** can be accessed at:
 
-* [Render Deployment URL](https://my-fit-mantra-assignment.onrender.com/)
+* [Render Deployment URL](https://my-fit-mantra-assignment-1.onrender.com/)
 
 ### POST `/generate-workout-plan`
 
@@ -190,7 +190,7 @@ My_Fit_Mantra_Assignment/
 ## Links
 
 * **GitHub Repository**: [https://github.com/jithu2023/My\_Fit\_Mantra\_Assignment](https://github.com/jithu2023/My_Fit_Mantra_Assignment)
-* **Live Deployment**: [https://my-fit-mantra-assignment.onrender.com/](https://my-fit-mantra-assignment.onrender.com/)
+* **Live Deployment**: [https://my-fit-mantra-assignment-1.onrender.com/](https://my-fit-mantra-assignment-1.onrender.com/)
 
 ---
 
