@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Plan Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label {
+            margin-top: 10px;
+            display: block;
+        }
+        input, select {
+            padding: 8px;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Workout Plan Generator</h1>
+
+<form id="workout-form">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="age">Age</label>
+    <input type="number" id="age" name="age" required>
+
+    <label for="gender">Gender</label>
+    <select id="gender" name="gender" required>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+    </select>
+
+    <label for="goal">Goal</label>
+    <select id="goal" name="goal" required>
+        <option value="weight_loss">Weight Loss</option>
+        <option value="muscle_gain">Muscle Gain</option>
+        <option value="maintenance">Maintenance</option>
+    </select>
+
+    <label for="experience">Experience</label>
+    <select id="experience" name="experience" required>
+        <option value="beginner">Beginner</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="advanced">Advanced</option>
+    </select>
+
+    <label for="days_per_week">Days per Week</label>
+    <input type="number" id="days_per_week" name="days_per_week" min="1" max="7" required>
+
+    <label for="include_circuit">Include Circuit?</label>
+    <input type="checkbox" id="include_circuit" name="include_circuit">
+
+    <label for="include_superset">Include Superset?</label>
+    <input type="checkbox" id="include_superset" name="include_superset">
+
+    <button type="submit">Generate Workout Plan</button>
+</form>
+
+<div class="result" id="result" style="display: none;">
+    <h2>Workout Plan</h2>
+    <pre id="plan"></pre>
+    <button id="generate-pdf" style="display: none;">Generate PDF</button>
+</div>
+
+<script>
+    document.getElementById('workout-form').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        const userProfile = {
+            name: formData.get('name'),
+            age: parseInt(formData.get('age')),
+            gender: formData.get('gender'),
+            goal: formData.get('goal'),
+            experience: formData.get('experience'),
+            equipment: [],
+            days_per_week: parseInt(formData.get('days_per_week')),
+            include_circuit: formData.has('include_circuit'),
+            include_superset: formData.has('include_superset')
+        };
+
+        // Send the request to the backend
+        const response = await fetch('/generate-workout-plan', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userProfile)
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            document.getElementById('plan').textContent = JSON.stringify(data.workout_plan, null, 2);
+            document.getElementById('result').style.display = 'block';
+
+            // Enable the "Generate PDF" button and link it to the PDF file
+            const pdfLink = '/' + data.pdf_file;
+            const pdfButton = document.getElementById('generate-pdf');
+            pdfButton.style.display = 'inline-block';
+            pdfButton.addEventListener('click', function () {
+                window.location.href = pdfLink;
+            });
+        } else {
+            alert('Error generating workout plan');
+        }
+    });
+</script>
+
+</body>
+</html>
