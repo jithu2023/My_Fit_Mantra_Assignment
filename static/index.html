@@ -1,133 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workout Plan Generator</title>
     <style>
+        /* General styling */
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: 'Arial', sans-serif;
+            margin-top: 100px;
+            padding: 0;
+            background-color: #f4f7fc;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-        label {
-            margin-top: 10px;
-            display: block;
+
+        h1 {
+            font-size: 1.8rem;
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            font-weight: 600;
         }
-        input, select {
-            padding: 8px;
+
+        .container {
             width: 100%;
-            margin-bottom: 15px;
+            max-width: 450px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
+
+        label {
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            display: block;
+            color: #555;
+        }
+
+        input,
+        select {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #4CAF50;
+        }
+
         button {
-            padding: 10px 20px;
+            width: 100%;
+            padding: 12px;
             background-color: #4CAF50;
             color: white;
             border: none;
+            border-radius: 8px;
             cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
         }
+
         button:hover {
             background-color: #45a049;
         }
+
+        .checkbox-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .checkbox-group label {
+            font-size: 0.9rem;
+            margin-right: 15px;
+        }
+
         .result {
+            display: none;
             margin-top: 30px;
             padding: 20px;
             background-color: #f2f2f2;
-            border-radius: 5px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .result h2 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        pre {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: #333;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        #generate-pdf {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        #generate-pdf:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
+
 <body>
 
-<h1>Workout Plan Generator</h1>
+    <div class="container">
+        <h1>Workout Plan Generator</h1>
+        <form id="workout-form">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
 
-<form id="workout-form">
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" required>
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" required>
 
-    <label for="age">Age</label>
-    <input type="number" id="age" name="age" required>
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
 
-    <label for="gender">Gender</label>
-    <select id="gender" name="gender" required>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-    </select>
+            <label for="goal">Goal</label>
+            <select id="goal" name="goal" required>
+                <option value="weight_loss">Weight Loss</option>
+                <option value="muscle_gain">Muscle Gain</option>
+                <option value="maintenance">Maintenance</option>
+            </select>
 
-    <label for="goal">Goal</label>
-    <select id="goal" name="goal" required>
-        <option value="weight_loss">Weight Loss</option>
-        <option value="muscle_gain">Muscle Gain</option>
-        <option value="maintenance">Maintenance</option>
-    </select>
+            <label for="experience">Experience</label>
+            <select id="experience" name="experience" required>
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+            </select>
 
-    <label for="experience">Experience</label>
-    <select id="experience" name="experience" required>
-        <option value="beginner">Beginner</option>
-        <option value="intermediate">Intermediate</option>
-        <option value="advanced">Advanced</option>
-    </select>
+            <label for="days_per_week">Days per Week</label>
+            <input type="number" id="days_per_week" name="days_per_week" min="1" max="7" required>
 
-    <label for="days_per_week">Days per Week</label>
-    <input type="number" id="days_per_week" name="days_per_week" min="1" max="7" required>
+            <div class="checkbox-group">
+                <label for="include_circuit">Include Circuit?</label>
+                <input type="checkbox" id="include_circuit" name="include_circuit">
+            </div>
+            <div class="checkbox-group">
+                <label for="include_superset">Include Superset?</label>
+                <input type="checkbox" id="include_superset" name="include_superset">
+            </div>
 
-    <label for="include_circuit">Include Circuit?</label>
-    <input type="checkbox" id="include_circuit" name="include_circuit">
+            <button type="submit">Generate Workout Plan</button>
+        </form>
 
-    <label for="include_superset">Include Superset?</label>
-    <input type="checkbox" id="include_superset" name="include_superset">
+        <div class="result" id="result">
+            <h2>Workout Plan</h2>
+            <pre id="plan"></pre>
+            <button id="generate-pdf" style="display: none;">Generate PDF</button>
+        </div>
+    </div>
 
-    <button type="submit">Generate Workout Plan</button>
-</form>
+    <script>
+        document.getElementById('workout-form').addEventListener('submit', async function (event) {
+            event.preventDefault();
 
-<div class="result" id="result" style="display: none;">
-    <h2>Workout Plan</h2>
-    <pre id="plan"></pre>
-    <button id="generate-pdf" style="display: none;">Generate PDF</button>
-</div>
+            const formData = new FormData(this);
+            const userProfile = {
+                name: formData.get('name'),
+                age: parseInt(formData.get('age')),
+                gender: formData.get('gender'),
+                goal: formData.get('goal'),
+                experience: formData.get('experience'),
+                equipment: [],
+                days_per_week: parseInt(formData.get('days_per_week')),
+                include_circuit: formData.has('include_circuit'),
+                include_superset: formData.has('include_superset')
+            };
 
-<script>
-    document.getElementById('workout-form').addEventListener('submit', async function (event) {
-        event.preventDefault();
-
-        const formData = new FormData(this);
-        const userProfile = {
-            name: formData.get('name'),
-            age: parseInt(formData.get('age')),
-            gender: formData.get('gender'),
-            goal: formData.get('goal'),
-            experience: formData.get('experience'),
-            equipment: [],
-            days_per_week: parseInt(formData.get('days_per_week')),
-            include_circuit: formData.has('include_circuit'),
-            include_superset: formData.has('include_superset')
-        };
-
-        // Send the request to the backend
-        const response = await fetch('/generate-workout-plan', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userProfile)
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            document.getElementById('plan').textContent = JSON.stringify(data.workout_plan, null, 2);
-            document.getElementById('result').style.display = 'block';
-
-            // Enable the "Generate PDF" button and link it to the PDF file
-            const pdfLink = '/' + data.pdf_file;
-            const pdfButton = document.getElementById('generate-pdf');
-            pdfButton.style.display = 'inline-block';
-            pdfButton.addEventListener('click', function () {
-                window.location.href = pdfLink;
+            const response = await fetch('/generate-workout-plan', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userProfile)
             });
-        } else {
-            alert('Error generating workout plan');
-        }
-    });
-</script>
+
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById('plan').textContent = JSON.stringify(data.workout_plan, null, 2);
+                document.getElementById('result').style.display = 'block';
+
+                const pdfLink = '/' + data.pdf_file;
+                const pdfButton = document.getElementById('generate-pdf');
+                pdfButton.style.display = 'inline-block';
+                pdfButton.addEventListener('click', function () {
+                    window.location.href = pdfLink;
+                });
+            } else {
+                alert('Error generating workout plan');
+            }
+        });
+    </script>
 
 </body>
+
 </html>
