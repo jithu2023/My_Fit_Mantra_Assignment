@@ -138,8 +138,7 @@ This endpoint accepts a JSON object representing the user profile and returns a 
 4. Set up environment variables:
    - Create a `.env` file in the root directory
    - Add your OpenAI API key:
-     ```
-     OPENAI_API_KEY=sk-...FLUA
+
 ## Running the Application
 
 1. Start the FastAPI server:
