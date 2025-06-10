@@ -134,6 +134,15 @@ This endpoint accepts a JSON object representing the user profile and returns a 
 
 3. Start the FastAPI server:
 
+=======
+4. Set up environment variables:
+   - Create a `.env` file in the root directory
+   - Add your OpenAI API key:
+
+## Running the Application
+
+1. Start the FastAPI server:
+>>>>>>> 0aaf573 (readme added)
    ```bash
    uvicorn main:app --reload
    ```
@@ -169,6 +178,12 @@ My_Fit_Mantra_Assignment/
 * Includes exercises like "Jumping Jacks" and "Arm Circles" for a fixed duration or reps.
 
 ### 2. **Main Exercises**:
+=======
+
+- `OPENAI_MODEL`: Which model to use (defaults to gpt-3.5-turbo)
+::
+## Usage
+>>>>>>> e79fa92 (readme added)
 
 * Selects a variety of exercises based on the user's experience level (e.g., "Bodyweight Squat", "Push-up", etc.).
 * Adjusts sets and reps based on progressive overload for sessions after the first 4 weeks.
